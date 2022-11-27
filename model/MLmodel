@@ -1,0 +1,18 @@
+artifact_path: custom_model
+flavors:
+  python_function:
+    artifacts:
+      ames-regression-model:
+        path: artifacts/model.pkl
+        uri: tmp/model.pkl
+    cloudpickle_version: 2.2.0
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.8.15
+mlflow_version: 2.0.1
+model_uuid: 8850c89b6184451583fda1b220018828
+run_id: 521d94f5c067402691f6814b8f0199e6
+utc_time_created: '2022-11-26 07:08:02.075167'
