@@ -5,7 +5,7 @@ latest Azure ML CLI v2 installed (refer this [link](https://learn.microsoft.com/
 
 ## Steps
 1. Create a local virtual environment and install needed libraries using the `make install` command.
-2. Create the Azure ML environment using the `make infra` command.
+2. Create the Azure ML environment using the `make infra` command:
   1. Ensure you have a `sub.env` file with your subscription listed as a single line command as `SUB_ID=<your
      subscription>`.
 3. Then, start a local mlflow backend server, and in a separate terminal, trigger a local run, using `make local_run`.
