@@ -13,6 +13,6 @@ flavors:
     python_model: python_model.pkl
     python_version: 3.8.15
 mlflow_version: 2.0.1
-model_uuid: 8850c89b6184451583fda1b220018828
-run_id: 521d94f5c067402691f6814b8f0199e6
-utc_time_created: '2022-11-26 07:08:02.075167'
+model_uuid: 30a99e61a2694f4da4a8dd7be41f9fea
+run_id: eb4f06284a41453e86cc0e4c71ea096e
+utc_time_created: '2022-11-30 13:39:16.978047'
