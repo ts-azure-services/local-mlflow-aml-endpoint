@@ -20,4 +20,5 @@ aml_deploy:
 
 get_prediction:
 	python ./scripts/make_test_data.py
-	cat ./data/test_data.json
+	cat ./data/test_data_option1.json
+	cat ./data/test_data_option2.json
