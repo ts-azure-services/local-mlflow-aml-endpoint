@@ -7,6 +7,9 @@ from sklearn import linear_model
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from mlflow.pyfunc import PythonModel
+from mlflow.models.signature import ModelSignature
+from mlflow.types.schema import Schema, TensorSpec, ColSpec
+from mlflow.models.signature import infer_signature
 
 #mlflow.autolog()
 
@@ -76,8 +79,10 @@ def train_and_evaluate(dataframe, cat_features_values):
     # Separate features from the target variable and convert to NumPy
     features = dataframe.drop(["SalePrice"], axis=1)
     target = dataframe.loc[:, "SalePrice"]
+
     # Split into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(features.to_numpy(), target.to_numpy(), test_size=0.2, random_state=12)
+    #X_train, X_test, y_train, y_test = train_test_split(features.to_numpy(), target.to_numpy(), test_size=0.2, random_state=12)
+    X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=12)
 
     # Plot
     plot = dataframe.plot.scatter(x=0, y="SalePrice")
@@ -99,6 +104,18 @@ def train_and_evaluate(dataframe, cat_features_values):
     model_artifact_name = "ames-regression-model"
     model_artifacts = {model_artifact_name: "tmp/model.pkl"}
 
+    # Run predictions
+    y_pred = model.predict(X_test)
+
+    # Define input schema
+    input_schema = Schema([
+        ColSpec("long","Lot Area"),
+        ColSpec("long","Gr Liv Area"),
+        ColSpec("long","Garage Area"),
+        ColSpec("string","Bldg Type"),
+        ])
+    output_schema = Schema([ColSpec("long")])
+
     mlflow.pyfunc.log_model(
         "custom_model",
         python_model=WrappedLRModel(sklearn_model_features=list(features.columns),
@@ -106,16 +123,17 @@ def train_and_evaluate(dataframe, cat_features_values):
             model_artifact_name=model_artifact_name
             ),
         artifacts=model_artifacts,
+        #signature = infer_signature(X_train, y_pred),
+        signature = ModelSignature(inputs=input_schema, outputs=output_schema),
         registered_model_name="House price predictions"
     )
 
     # Evaluate the model
-    y_pred = model.predict(X_test)
     err = mean_squared_error(y_test, y_pred)
     mlflow.log_metric("MSE", err)
 
-    ## Log the artifacts
-    #mlflow.log_artifacts("tmp")
+    # Log the artifacts
+    mlflow.log_artifacts("tmp")
 
 with mlflow.start_run():
     prepared, cat_features_values = prepare_data(selected)

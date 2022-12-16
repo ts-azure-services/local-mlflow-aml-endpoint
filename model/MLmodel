@@ -13,6 +13,11 @@ flavors:
     python_model: python_model.pkl
     python_version: 3.8.15
 mlflow_version: 2.0.1
-model_uuid: 626218c7a47b4c918a8e83a2a61a7b0c
-run_id: edb31268e6e2416b9fa80b99160c3603
-utc_time_created: '2022-12-12 17:41:18.664466'
+model_uuid: 40cfca815b884dc9b942130274a92e4e
+run_id: 2c48754d47ee4274b657c70a4b4954cb
+signature:
+  inputs: '[{"name": "Lot Area", "type": "long"}, {"name": "Gr Liv Area", "type":
+    "long"}, {"name": "Garage Area", "type": "long"}, {"name": "Bldg Type", "type":
+    "string"}]'
+  outputs: '[{"type": "long"}]'
+utc_time_created: '2022-12-16 03:26:44.921127'
